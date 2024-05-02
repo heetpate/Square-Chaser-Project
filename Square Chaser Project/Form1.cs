@@ -12,7 +12,19 @@ namespace Square_Chaser_Project
 {
     public partial class Form1 : Form
     {
+
         int playerSpeed = 3;
+        int boost = 1;
+        int player1Speed = 1; 
+        int player2Speed = 1;
+
+        int player1Score = 0;
+        int player2Score = 0;
+
+        //int whiteSquareXSpeed = -6;
+        //int whiteSquareYSpeed = -6;
+        //int yellowSquareXSpeed = -6;
+        //int yellowSquareYSpeed = -6;
 
         bool wPressed = false;
         bool sPressed = false;
@@ -22,6 +34,8 @@ namespace Square_Chaser_Project
         bool downPressed = false;
         bool leftPressed = false;
         bool rightPressed = false;
+
+        Random randGen = new Random();
 
         //Players Rectangle
         Rectangle player1 = new Rectangle(75, 130, 15, 15);
@@ -43,8 +57,13 @@ namespace Square_Chaser_Project
         {
             InitializeComponent();
 
-            Random randGen = new Random();
-            whiteSquare.X = randGen.Next(50, this.Width - 50);
+            //Generate random position for whitesquare/the point
+            whiteSquare.X = randGen.Next(22, 308);
+            whiteSquare.Y = randGen.Next(22, 248);
+
+            //Generate random position for yellow circle/the boost
+            yellowCircle.X = randGen.Next(22, 308);
+            yellowCircle.Y = randGen.Next(22, 248);
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -128,7 +147,6 @@ namespace Square_Chaser_Project
                 case Keys.Right:
                     rightPressed = false;
                     break;
-
             }
         }
 
@@ -168,6 +186,38 @@ namespace Square_Chaser_Project
             if (rightPressed == true && player2.X < 310)
             {
                 player2.X = player2.X + playerSpeed;
+            }
+
+            //Check if the white and yellow orps hit the player1
+            if (whiteSquare.IntersectsWith(player1)) 
+            {
+                player1Score++;
+                whiteSquare.X = randGen.Next(22, 308);
+                whiteSquare.Y = randGen.Next(22, 248);
+            }
+            else if (yellowCircle.IntersectsWith(player1))
+            {
+                boost++;
+                whiteSquare.X = randGen.Next(22, 308);
+                whiteSquare.Y = randGen.Next(22, 248);
+            }
+            else if (dangerObject.IntersectsWith(player1))
+            {
+                player1Score--;
+            }
+
+            //Check if the white and yellow orps hit the player2
+            if (whiteSquare.IntersectsWith(player1))
+            {
+                player2Score++;
+                whiteSquare.X = randGen.Next(22, 308);
+                whiteSquare.Y = randGen.Next(22, 248);
+            }
+            else if (yellowCircle.IntersectsWith(player1))
+            {
+                boost++;
+                whiteSquare.X = randGen.Next(22, 308);
+                whiteSquare.Y = randGen.Next(22, 248);
             }
 
             Refresh();
