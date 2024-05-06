@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Square_Chaser_Project
 {
@@ -14,17 +15,16 @@ namespace Square_Chaser_Project
     {
 
         int playerSpeed = 3;
-        int boost = 1;
-        int player1Speed = 1; 
+
+        int player1Speed = 1;
         int player2Speed = 1;
 
         int player1Score = 0;
         int player2Score = 0;
 
-        //int whiteSquareXSpeed = -6;
-        //int whiteSquareYSpeed = -6;
-        //int yellowSquareXSpeed = -6;
-        //int yellowSquareYSpeed = -6;
+        int dangerObjectXSpeed = -5;
+        int dangerObjectYSpeed = -5;
+
 
         bool wPressed = false;
         bool sPressed = false;
@@ -64,6 +64,11 @@ namespace Square_Chaser_Project
             //Generate random position for yellow circle/the boost
             yellowCircle.X = randGen.Next(22, 308);
             yellowCircle.Y = randGen.Next(22, 248);
+
+
+            //Generate random position for the dangerObject
+            dangerObject.X = randGen.Next(22, 308);
+            dangerObject.Y = randGen.Next(22, 248);
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -72,7 +77,7 @@ namespace Square_Chaser_Project
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
-        {   
+        {
             e.Graphics.Clear(Color.Black);
 
             //Coloring the Rectangle
@@ -152,8 +157,22 @@ namespace Square_Chaser_Project
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+            // Move the dangerObject
+            dangerObject.X += dangerObjectXSpeed;
+            dangerObject.Y += dangerObjectYSpeed;
+
+            // Check if dangerObject hits the boundaries
+            if (dangerObject.Left < boundry.Left || dangerObject.Right > boundry.Right)
+            {
+                dangerObjectXSpeed = -dangerObjectXSpeed;
+            }
+            if (dangerObject.Top < boundry.Top || dangerObject.Bottom > boundry.Bottom)
+            {
+                dangerObjectYSpeed = -dangerObjectYSpeed;
+            }
+
             //move player 1
-            if (wPressed == true && player1.Y > 20.5)
+            if (wPressed == true && player1.Y > 20)
             {
                 player1.Y = player1.Y - playerSpeed;
             }
@@ -189,21 +208,76 @@ namespace Square_Chaser_Project
             }
 
             //Check if the white and yellow orps hit the player1
-            if (whiteSquare.IntersectsWith(player1)) 
+            if (whiteSquare.IntersectsWith(player1))
             {
                 player1Score++;
+
+                scoreLabel1.Text = $"{player1Score}";
+
                 whiteSquare.X = randGen.Next(22, 308);
                 whiteSquare.Y = randGen.Next(22, 248);
             }
             else if (yellowCircle.IntersectsWith(player1))
             {
-                boost++;
+
+                player1Speed++;
+
+                yellowCircle.X = randGen.Next(22, 308);
+                yellowCircle.Y = randGen.Next(22, 248);
+
                 whiteSquare.X = randGen.Next(22, 308);
                 whiteSquare.Y = randGen.Next(22, 248);
+
             }
             else if (dangerObject.IntersectsWith(player1))
             {
                 player1Score--;
+                scoreLabel1.Text = $"{player1Score}";
+            }
+
+            //Check if the white and yellow orps hit the player2
+            if (whiteSquare.IntersectsWith(player2))
+            {
+                player2Score++;
+                scoreLabel2.Text = $"{player2Score}";
+
+                whiteSquare.X = randGen.Next(22, 308);
+                whiteSquare.Y = randGen.Next(22, 248);
+            }
+            else if (yellowCircle.IntersectsWith(player2))
+            {
+                player2Speed++;
+                yellowCircle.X = randGen.Next(22, 308);
+                yellowCircle.Y = randGen.Next(22, 248);
+            }
+            else if (dangerObject.IntersectsWith(player2))
+            {
+                player2Score--;
+                scoreLabel2.Text = $"{player2Score}";
+
+                whiteSquare.X = randGen.Next(22, 308);
+            }
+
+            //check for the winner 
+            if (player1Score == 5)
+            {
+                winLabel.Text = "Player 1 Wins";
+                gameTimer.Stop();
+            }
+            if (player2Score == 5)
+            {
+                winLabel.Text = "Player 2 Wins";
+                gameTimer.Stop();
+            }
+            if (player1Score == -5)
+            {
+                winLabel.Text = "Player 2 Wins";
+                gameTimer.Stop();
+            }
+            if (player2Score == -5)
+            {
+                winLabel.Text = "Player 1 Wins";
+                gameTimer.Stop();
             }
 
             //Check if the white and yellow orps hit the player2
@@ -215,12 +289,15 @@ namespace Square_Chaser_Project
             }
             else if (yellowCircle.IntersectsWith(player1))
             {
-                boost++;
+                player1Speed++;
                 whiteSquare.X = randGen.Next(22, 308);
                 whiteSquare.Y = randGen.Next(22, 248);
+
             }
 
             Refresh();
         }
     }
 }
+
+
