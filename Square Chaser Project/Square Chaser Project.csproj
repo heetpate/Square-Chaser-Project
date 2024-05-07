@@ -65,6 +65,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -78,6 +79,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\360_F_386827376_uWOOhKGk6A4UVL5imUBt20Bh8cmODqzx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mixkit-losing-bleeps-2026.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collect-points-190037.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button-124476.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mixkit-applause-ambience-loop-513.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
