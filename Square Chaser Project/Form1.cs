@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-using System.Drawing;
 using System.Media;
 using System.Runtime.InteropServices;
 
@@ -59,11 +58,16 @@ namespace Square_Chaser_Project
         SoundPlayer cheer = new SoundPlayer(Properties.Resources.cheering);
         SoundPlayer losingPoint = new SoundPlayer(Properties.Resources.losingPoint);
 
+        Image backImage = Properties.Resources.spaceImage;
+
         Pen purpleBrush = new Pen(Color.Purple, 6); //purple color for boundry
 
         public Form1()
         {
             InitializeComponent();
+
+            SpeedRandomizer();
+            PointRandomizer();
 
             //Generate random position for whitesquare/the point
             whiteSquare.X = randGen.Next(22, 308);
@@ -85,10 +89,10 @@ namespace Square_Chaser_Project
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.Clear(Color.Black);
+           // e.Graphics.Clear(Color.Black);
             // e.Graphics.DrawImage(Properties.Resources.vampireMouth, dangerObject);
 
-            e.Graphics.DrawImage(Properties.Resources.spaceImage, 20, 20, 310, 250);
+            //e.Graphics.DrawImage(backImage, 20, 20, 310, 250);
 
 
             //Coloring the Rectangle
@@ -175,6 +179,21 @@ namespace Square_Chaser_Project
             CheckTheWinner();
 
             Refresh();
+        }
+
+        public void SpeedRandomizer()
+        {
+
+        }
+
+        public void PointRandomizer()
+        {
+
+        }
+
+        public void DangerRandomizer()
+        {
+
         }
 
         public void ObjectMovement()
@@ -326,6 +345,11 @@ namespace Square_Chaser_Project
                 gameTimer.Stop();
                 cheer.Play();
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
