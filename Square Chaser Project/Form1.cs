@@ -11,6 +11,10 @@ using System.Threading;
 using System.Media;
 using System.Runtime.InteropServices;
 
+// May 08, 2024
+//Heet Patel
+//Square Chaser
+
 namespace Square_Chaser_Project
 {
     public partial class Form1 : Form
@@ -18,6 +22,8 @@ namespace Square_Chaser_Project
         int player1Speed = 2;
         int player2Speed = 2;
         int maxSpeed = 7;
+
+        int pause = 175;
 
         //players score
         int player1Score = 0;
@@ -60,7 +66,7 @@ namespace Square_Chaser_Project
 
         Image backImage = Properties.Resources.spaceImage;
 
-        Pen purpleBrush = new Pen(Color.Purple, 6); //purple color for boundry
+        Pen yellowPen = new Pen(Color.Yellow, 6); //purple color for boundry
 
         public Form1()
         {
@@ -68,18 +74,7 @@ namespace Square_Chaser_Project
 
             SpeedRandomizer();
             PointRandomizer();
-
-            //Generate random position for whitesquare/the point
-            whiteSquare.X = randGen.Next(22, 308);
-            whiteSquare.Y = randGen.Next(22, 248);
-
-            //Generate random position for yellow circle/the boost
-            yellowCircle.X = randGen.Next(22, 308);
-            yellowCircle.Y = randGen.Next(22, 248);
-
-            //Generate random position for the dangerObject
-            dangerObject.X = randGen.Next(22, 308);
-            dangerObject.Y = randGen.Next(22, 248);
+            DangerRandomizer();
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -89,12 +84,6 @@ namespace Square_Chaser_Project
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-           // e.Graphics.Clear(Color.Black);
-            // e.Graphics.DrawImage(Properties.Resources.vampireMouth, dangerObject);
-
-            //e.Graphics.DrawImage(backImage, 20, 20, 310, 250);
-
-
             //Coloring the Rectangle
             e.Graphics.FillRectangle(blueBrush, player1);
             e.Graphics.FillRectangle(limeBrush, player2);
@@ -103,11 +92,12 @@ namespace Square_Chaser_Project
             e.Graphics.FillRectangle(orangeRedBrush, dangerObject);
 
             //Drawing the boundry of the 
-            e.Graphics.DrawRectangle(purpleBrush, boundry);
+            e.Graphics.DrawRectangle(yellowPen, boundry);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            //keys for first and second player to click to enable it
             switch (e.KeyCode)
             {
                 case Keys.W:
@@ -140,6 +130,7 @@ namespace Square_Chaser_Project
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
+            // unable when the keys are not pressed
             switch (e.KeyCode)
             {
                 case Keys.W:
@@ -172,28 +163,36 @@ namespace Square_Chaser_Project
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+          
             ObjectMovement();
             Boundries();
             PlayerMovement();
             Collision();
+            pause--;
             CheckTheWinner();
 
             Refresh();
         }
 
         public void SpeedRandomizer()
-        {
-
+        { 
+            //Generate random position for yellow circle/the boost
+            yellowCircle.X = randGen.Next(22, 308);
+            yellowCircle.Y = randGen.Next(22, 248);
         }
 
         public void PointRandomizer()
         {
-
+            //Generate random position for whitesquare/the point
+            whiteSquare.X = randGen.Next(22, 308);
+            whiteSquare.Y = randGen.Next(22, 248);
         }
 
         public void DangerRandomizer()
         {
-
+            //Generate random position for the dangerObject
+            dangerObject.X = randGen.Next(22, 308);
+            dangerObject.Y = randGen.Next(22, 248);
         }
 
         public void ObjectMovement()
@@ -285,15 +284,16 @@ namespace Square_Chaser_Project
                 yellowCircle.X = randGen.Next(22, 308);
                 yellowCircle.Y = randGen.Next(22, 248);
             }
-            else if (dangerObject.IntersectsWith(player1))
+            else if (dangerObject.IntersectsWith(player1) && pause < 0)
             {
+                pause = 175;
                 player1Score--;
                 scoreLabel1.Text = $"{player1Score}";
                 losingPoint.Play();
             }
-
+            pause--;
             //Check if the white and yellow orps hit the player2
-            if (whiteSquare.IntersectsWith(player2))
+            if (whiteSquare.IntersectsWith(player2) )
             {
                 player2Score++;
                 scoreLabel2.Text = $"{player2Score}";
@@ -310,12 +310,14 @@ namespace Square_Chaser_Project
                 yellowCircle.X = randGen.Next(22, 308);
                 yellowCircle.Y = randGen.Next(22, 248);
             }
-            else if (dangerObject.IntersectsWith(player2))
+            else if (dangerObject.IntersectsWith(player2) && pause < 0)
             {
+                pause = 175;
                 player2Score--;
                 scoreLabel2.Text = $"{player2Score}";
                 losingPoint.Play();
             }
+            
         }
 
         public void CheckTheWinner()

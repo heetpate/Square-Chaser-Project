@@ -51,30 +51,33 @@
             this.scoreLabel1.BackColor = System.Drawing.Color.Transparent;
             this.scoreLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.scoreLabel1.ForeColor = System.Drawing.Color.White;
-            this.scoreLabel1.Location = new System.Drawing.Point(40, 9);
+            this.scoreLabel1.Location = new System.Drawing.Point(40, 49);
             this.scoreLabel1.Name = "scoreLabel1";
             this.scoreLabel1.Size = new System.Drawing.Size(100, 23);
             this.scoreLabel1.TabIndex = 0;
+            this.scoreLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // scoreLabel2
             // 
             this.scoreLabel2.BackColor = System.Drawing.Color.Transparent;
             this.scoreLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.scoreLabel2.ForeColor = System.Drawing.Color.White;
-            this.scoreLabel2.Location = new System.Drawing.Point(187, 9);
+            this.scoreLabel2.Location = new System.Drawing.Point(198, 49);
             this.scoreLabel2.Name = "scoreLabel2";
             this.scoreLabel2.Size = new System.Drawing.Size(100, 23);
             this.scoreLabel2.TabIndex = 1;
+            this.scoreLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // winLabel
             // 
             this.winLabel.BackColor = System.Drawing.Color.Transparent;
             this.winLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
             this.winLabel.ForeColor = System.Drawing.Color.White;
-            this.winLabel.Location = new System.Drawing.Point(12, 133);
+            this.winLabel.Location = new System.Drawing.Point(12, 183);
             this.winLabel.Name = "winLabel";
             this.winLabel.Size = new System.Drawing.Size(339, 23);
             this.winLabel.TabIndex = 2;
+            this.winLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Label2
             // 
